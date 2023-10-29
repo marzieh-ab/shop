@@ -13,7 +13,38 @@ const Navbar = (props: Props) => {
   const [showProfile, setShowProfile] = useState<boolean>(false);
   const [showNav, setShowNav] = useState<boolean>(false);
   const session = useSession();
-  console.log(session, "444");
+  // console.log(session, "444");
+
+  const SignOut = () => {
+    if (session && session.data?.user) {
+      return (
+        <ul className="py-5 px-1 text-neutral-600">
+          <li className="hover:bg-gray-100 hover:text-neutral-900 px-5 py-2 cursor-pointer">
+            {session.data?.user.name}
+          </li>
+          <li
+            onClick={() => signOut()}
+            className="whitespace-nowrap hover:text-red-600 px-5 py-2 cursor-pointer"
+          >
+            SignOut
+          </li>
+          <li className="whitespace-nowrap hover:bg-gray-100 hover:text-neutral-900 px-5 py-2 cursor-pointer">
+            <a href="/addproduct">Add Product</a>
+          </li>
+        </ul>
+      );
+    }
+    return (
+      <ul>
+        <li
+          onClick={() => signIn()}
+          className="whitespace-nowrap hover:bg-gray-100 hover:text-neutral-900 px-5 py-2 cursor-pointer"
+        >
+          SignIn
+        </li>
+      </ul>
+    );
+  };
 
   return (
     <div>
@@ -34,12 +65,13 @@ const Navbar = (props: Props) => {
                   Filters
                 </a>
               </li>
-
-              <li>
-                <a href="myproducts" className="py-3 inline-block w-full">
-                  My Products
-                </a>
-              </li>
+              {session?.data?.user && (
+                <li>
+                  <a href="myproducts" className="py-3 inline-block w-full">
+                    My Products
+                  </a>
+                </li>
+              )}
             </ul>
           </nav>
         </div>
@@ -57,9 +89,9 @@ const Navbar = (props: Props) => {
             <div
               className={`absolute bg-white z-[2] rounded-lg shadow-lg ${
                 showProfile ? "" : "hidden"
-              } `}
+              }`}
             >
-              <Link href="/signin">SignIn</Link>
+              <SignOut />
             </div>
           </div>
 
