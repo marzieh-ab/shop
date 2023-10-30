@@ -8,6 +8,8 @@ import Size from "../components/Size";
 import Color from "../components/Color";
 import Para from "../components/Para";
 import ImageUploade from "../components/ImageUploade";
+import { Toaster, toast } from "react-hot-toast";
+import axios from "axios";
 type Props = {};
 
 const ProductForm = (props: Props) => {
@@ -17,10 +19,10 @@ const ProductForm = (props: Props) => {
   const [formData, setFormData] = useState({
     title: "",
     description: `<div>
-     <p>
-     Enter your text here ....
-     </p>
-   </div>`,
+       <p>
+       Enter your text here ....
+       </p>
+     </div>`,
     category: "",
     style: "",
     size: "",
@@ -62,10 +64,10 @@ const ProductForm = (props: Props) => {
     });
   };
 
-  // useEffect(() => {
-  //   console.log(formData.images);
-  //   console.log(formData);
-  // }, [formData]);
+  useEffect(() => {
+    console.log(formData);
+    console.log(formData);
+  }, [formData]);
 
   useEffect(() => {
     setFormData((prevFormData) => ({
@@ -75,6 +77,26 @@ const ProductForm = (props: Props) => {
       userId: id,
     }));
   }, [imageUrls]);
+
+  const postData = async () => {
+    const isFormDataNotEmpty = Object.values(formData).every(
+      (value) => value !== "" && value !== 0
+    );
+    console.log(isFormDataNotEmpty, "hiii");
+
+    if (isFormDataNotEmpty) {
+      try {
+        const response = await axios.post("/api/addproduct", formData);
+        router.push("/");
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      toast.error("pelese full all input");
+      console.log("erorrrr");
+    }
+  };
 
   return (
     <div className="px-5 max-w-[1280px] mx-auto mb-10">
@@ -199,10 +221,14 @@ const ProductForm = (props: Props) => {
           setImageUrls={setImageUrls}
           handleImageChange={handleImageChange}
         />
-        <button className="text-white mt-10 border-[1px] bg-purple-500 rounded-lg px-5 p-2">
+        <button
+          className="text-white mt-10 border-[1px] bg-purple-500 rounded-lg px-5 p-2"
+          onClick={postData}
+        >
           Submit
         </button>
       </div>
+      <Toaster />
     </div>
   );
 };

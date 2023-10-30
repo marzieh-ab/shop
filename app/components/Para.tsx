@@ -19,13 +19,11 @@ const Para = ({ setDescription, description }: Props) => {
     content: description,
   });
   const html = editor?.getHTML();
-  console.log(html, "htmllll");
+
   const menuRef = useRef<HTMLDivElement>(null);
 
-  console.log(menuRef, "reffff");
   useEffect(() => {
     const handler = (e: any) => {
-      console.log(e.target, "targeyyy");
       if (!menuRef.current?.contains(e.target)) {
         setFocus(false);
       }
@@ -33,11 +31,8 @@ const Para = ({ setDescription, description }: Props) => {
     document.addEventListener("mousedown", handler);
   }, []);
 
-  console.log(focus, "focus");
-
   useEffect(() => {
     setDescription(html);
-    console.log(html);
   }, [html]);
 
   return (

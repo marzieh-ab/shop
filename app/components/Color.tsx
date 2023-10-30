@@ -13,7 +13,6 @@ const Color: React.FC<Props> = ({ setFormData, Color }) => {
 
   // const colorArray: string[] = Color.split(",");
   const [selectedColors, setSelectColors] = useState<string[]>([]);
-  console.log(selectedColors, "selecteddd");
 
   const handleColorButtonClick = () => {
     setSelectColors((prevSelectedColors) => [

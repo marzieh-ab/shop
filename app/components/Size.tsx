@@ -7,7 +7,7 @@ type Props = {
 function Size({ setFormData, formData }: Props) {
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const sizes = ["sm", "md", "xl", "2xl", "3xl", "4xl"];
-  console.log(selectedSizes, "selecttt");
+  
   const handleSizeButtonClick = (size: string) => {
     setSelectedSizes((prevSize) => {
       if (prevSize.includes(size)) {
